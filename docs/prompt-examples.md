@@ -47,13 +47,12 @@ Read CLAUDE.md, docs/project-profile.md and relevant skills.
 Use the implementer agent.
 
 Goal:
-Add POST /api/incomes.
+Add POST /api/projects.
 
 Acceptance criteria:
-- authenticated users can create only their own income records
+- authenticated users can create only their own project records
 - owner identity comes from the authenticated principal, never from the request body
-- validate required fields and amount constraints
-- use BigDecimal for monetary values
+- validate required fields and field-length constraints
 - persist through the existing repository pattern
 - return the existing API error format
 - add integration tests for success, validation failure and cross-user ownership attempts
@@ -79,7 +78,7 @@ Read CLAUDE.md, docs/project-profile.md and the react-typescript skill.
 Use the implementer agent.
 
 Goal:
-Add an Income List page.
+Add a Project List page.
 
 Acceptance criteria:
 - fetch data through the existing API client
@@ -149,7 +148,7 @@ Do not commit, push or deploy.
 Use HIGH-RISK workflow.
 
 Goal:
-Allow users to update their own expense records only.
+Allow users to update their own document records only.
 
 Acceptance criteria:
 - ownership is derived server-side
@@ -370,4 +369,34 @@ Do not run unrelated agents.
 Do not introduce new technology without a concrete need.
 Do not commit, push or deploy.
 Report actual checks, skipped checks and unresolved risks.
+```
+
+## Optional domain example: financial calculation
+
+Use only when the project actually contains authoritative financial-rule logic.
+
+```text
+Read CLAUDE.md, docs/project-profile.md and the financial-calculations skill.
+
+This is a HIGH-RISK deterministic calculation change.
+
+Goal:
+Implement a versioned calculation rule from an approved specification.
+
+Acceptance criteria:
+- use the approved rule source and effective date
+- keep calculation logic deterministic
+- use exact decimal arithmetic and explicit rounding
+- preserve the input and rule-version snapshot needed for reproducibility
+- do not infer missing legal or regulatory values
+- add independent reference cases and boundary tests
+
+Run:
+test-engineer DESIGN
+-> implementer
+-> code-reviewer
+-> test-engineer VERIFY
+
+Do not change expected values merely to match the implementation.
+Do not commit, push or deploy.
 ```
