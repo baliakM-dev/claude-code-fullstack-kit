@@ -31,5 +31,16 @@ class SecurityRulesTests(unittest.TestCase):
         self.assertIn("refresh token", text)
         self.assertIn("csrf", text)
 
+    def test_spa_csrf_guidance_prefers_current_spring7_idiom_without_false_deprecation(self):
+        text = (ROOT / ".claude/skills/application-security/references/browser-csrf-cors.md").read_text(encoding="utf-8")
+        self.assertIn(".csrf(CsrfConfigurer::spa)", text)
+        self.assertIn(".csrf(csrf -> csrf.spa())", text)
+        self.assertIn("equivalent and not a defect", text)
+
+    def test_spring_security_guidance_rejects_redundant_historical_throws(self):
+        text = (ROOT / ".claude/skills/application-security/references/spring-security.md").read_text(encoding="utf-8")
+        self.assertIn("do not keep `throws Exception`", text)
+        self.assertIn("resolved Spring Security version", text)
+
 if __name__ == "__main__":
     unittest.main()
