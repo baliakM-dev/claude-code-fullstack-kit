@@ -43,6 +43,9 @@
 - Before invoking another agent, identify the independent value it adds. Do not invoke an agent merely because one exists or because a risk category has a matching role.
 - In remediation/review tasks that say to fix confirmed findings only: CONFIRMED/MUST findings may be implemented; SHOULD and LATER items are report-only by default. Promote a SHOULD item to implementation only when it is necessary to verify or safely fix a confirmed finding, or when the user explicitly asks for additional hardening.
 - Invoke implementation-explainer only when the user asks how code works, asks for a walkthrough/why explanation, or explicitly asks to be taught the completed change. Do not append it automatically to normal delivery workflows.
+- When a resumable custom subagent reaches `maxTurns` and returns PARTIAL for the same still-bounded task, resume that same agent with `SendMessage` using its agent ID/name before spawning a replacement. Tell it only what remains unfinished; do not repeat repository discovery or completed work.
+- Treat a `maxTurns` stop as incomplete work, not automatically as a failed implementation. Spawn a fresh instance only when the prior agent cannot be resumed, the task materially changed, independent fresh context is intentionally required, or the prior context is misleading/corrupted.
+- Do not raise `maxTurns` merely because one complex task needed continuation. Change per-agent limits only after repeated benchmark evidence shows the default is systematically too small.
 - Explicit user instructions about which agent to use or not use override this default orchestration.
 
 ## Context budget and handoff
