@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "defaultMode": "default",
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(/secrets/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gcloud/**)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Edit(/secrets/**)",
+      "Edit(/.claude/settings.json)",
+      "Edit(/.claude/settings.local.json)",
+      "Bash(git push *)",
+      "Bash(git commit *)",
+      "Bash(git reset *)",
+      "Bash(git clean *)",
+      "Bash(git restore *)",
+      "Bash(git stash *)",
+      "Bash(git checkout -- *)",
+      "Bash(docker system prune *)",
+      "Bash(docker volume prune *)"
+    ]
+  }
+}
