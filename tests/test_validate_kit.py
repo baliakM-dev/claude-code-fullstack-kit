@@ -28,7 +28,7 @@ class ValidatorTests(unittest.TestCase):
     def test_delivered_kit_passes(self):
         result = self.validate()
         self.assertEqual(result["status"], "PASS", result)
-        self.assertEqual(result["counts"]["agents"], 6)
+        self.assertEqual(result["counts"]["agents"], 7)
         self.assertEqual(result["counts"]["skills"], 9)
 
     def test_missing_manifest_fails(self):
