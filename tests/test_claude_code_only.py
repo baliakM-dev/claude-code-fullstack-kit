@@ -11,7 +11,7 @@ class ClaudeCodeOnlyTests(unittest.TestCase):
 
     def test_manifest_counts(self):
         manifest = json.loads((ROOT / "kit-manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["kit_version"], "1.5.2")
+        self.assertEqual(manifest["kit_version"], "1.5.3")
         self.assertEqual(len(manifest["agents"]), 6)
         self.assertEqual(len(manifest["skills"]), 9)
 
