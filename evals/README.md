@@ -29,3 +29,5 @@ A/B benchmark, authorization test or token-saving claim follows from their exist
 ## Scope and learning update 1.5.4
 
 `cases.json` adds NOT_RUN regressions for fix-only remediation scope, security-sensitive failure output, code/tests/docs/evidence consistency, orphan fixtures after test redesign, and the read-only `implementation-explainer`. The explainer scenarios verify educational flow, framework-magic separation and resistance to unsolicited refactoring. Structural tests assert the instructions exist; only real Claude Code runs can validate model behavior.
+
+The 1.5.4 scenarios also include a resume-before-respawn case: when a custom subagent reaches `maxTurns` and returns PARTIAL, continue the same resumable agent with `SendMessage` for the remaining bounded work instead of starting a duplicate agent or immediately raising its turn limit.
