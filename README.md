@@ -32,6 +32,10 @@ Optional domain skill:
 
 - `financial-calculations` — deterministic, versioned financial-rule implementation and verification.
 
+## Usage guide
+
+For practical guidance on when to use each agent and skill, recommended LIGHT / STANDARD / HIGH-RISK workflows, example prompts and token-efficient usage, see [docs/how-to-use.md](docs/how-to-use.md).
+
 ## Engineering principles
 
 - Prefer the smallest complete solution.
