@@ -168,6 +168,12 @@
       "input": "Explain this simple correct implementation. No review or alternatives were requested.",
       "expected": "Explain behavior and rationale only. Do not propose interfaces, patterns, libraries or refactors merely to add recommendations.",
       "status": "NOT_RUN"
+    },
+    {
+      "id": "resume-partial-subagent",
+      "input": "An implementer reaches maxTurns and returns PARTIAL after completing most of a still-bounded task. The remaining work is known and the agent is resumable.",
+      "expected": "Resume the same implementer with SendMessage using its agent ID/name and send only the unfinished work. Do not spawn a fresh duplicate or increase maxTurns based on this single run. Use a new agent only if resume is unavailable, the task changed materially, fresh independent context is intentional, or prior context is misleading.",
+      "status": "NOT_RUN"
     }
   ]
 }
