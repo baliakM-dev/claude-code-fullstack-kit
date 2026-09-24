@@ -400,3 +400,29 @@ test-engineer DESIGN
 Do not change expected values merely to match the implementation.
 Do not commit, push or deploy.
 ```
+
+## Explain an existing implementation
+
+Use when you want to learn how already-written code works. This is not a review or implementation task.
+
+```text
+Use implementation-explainer only.
+
+Explain the selected implementation in my language.
+
+Cover:
+- what problem it solves
+- the end-to-end request/data flow
+- responsibilities of the important classes
+- the actual execution order
+- what is project code vs framework-provided behavior
+- why the important decisions exist
+- what would happen if key pieces were missing
+- security/data implications where relevant
+- one concrete realistic request
+- the mental model I should remember
+
+Do not edit files.
+Do not turn this into a code review.
+Do not propose refactoring unless I explicitly ask for alternatives.
+```
