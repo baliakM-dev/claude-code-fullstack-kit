@@ -1,5 +1,7 @@
 # How to use the agents and skills
 
+For copy-ready task examples, see [Prompt examples](prompt-examples.md).
+
 This guide explains how to use the kit effectively in Claude Code without turning every task into a large multi-agent workflow.
 
 The main principle is simple:
