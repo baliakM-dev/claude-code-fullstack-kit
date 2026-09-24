@@ -478,6 +478,41 @@ test-engineer VERIFY
 
 The expected result must come from an approved rule or independent fixture, not from the implementation itself.
 
+## Continuing a subagent that hits maxTurns
+
+A `maxTurns` stop is a partial run, not automatically a failed implementation.
+
+For a resumable custom agent working on the same bounded task:
+
+```text
+agent reaches maxTurns / PARTIAL
+        ↓
+SendMessage to the same agent ID/name
+        ↓
+continue only the unfinished work
+        ↓
+DONE / another evidence-based continuation if still justified
+```
+
+Do not spawn a fresh copy of the same agent merely to continue where it stopped. The follow-up should be concise and focused:
+
+```text
+Continue the same task.
+
+Already complete:
+- <completed item>
+- <completed item>
+
+Remaining:
+- <unfinished bounded item>
+- <required check>
+
+Do not revisit completed decisions.
+Do not expand scope.
+```
+
+Use a fresh agent only when the old agent cannot be resumed, the task materially changed, independent fresh context is intentional, or the previous context became misleading. Do not increase an agent's `maxTurns` after one exceptional task; use repeated benchmark evidence before changing the limit.
+
 ## Token and context efficiency
 
 The kit is intentionally designed to avoid unnecessary agent chains.
@@ -496,6 +531,8 @@ For better results and lower context usage:
 10. Keep project-specific decisions in `CLAUDE.md` and the project profile, not in reusable agents.
 11. In fix-only work, do not implement SHOULD/LATER hardening by default.
 12. Do not invoke implementation-explainer unless the user asks to understand the code.
+13. Resume a resumable PARTIAL custom subagent before respawning another copy for the same task.
+14. Keep continuation prompts focused on remaining work; do not resend completed analysis.
 
 ## Project-specific defaults
 
