@@ -20,5 +20,10 @@ class AgentOrchestrationTests(unittest.TestCase):
         self.assertIn("resolved/project-selected version", text)
         self.assertIn("equivalent lambda vs method-reference", text)
 
+    def test_fix_only_scope_keeps_should_report_only(self):
+        text = (ROOT / ".claude/policies/core.md").read_text(encoding="utf-8")
+        self.assertIn("SHOULD and LATER items are report-only by default", text)
+        self.assertIn("fix confirmed findings only", text)
+
 if __name__ == "__main__":
     unittest.main()
