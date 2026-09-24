@@ -30,6 +30,16 @@
 - After two unsuccessful fixes of the same failure stop blind retries, obtain new evidence and change the hypothesis.
 - For auth, migrations, concurrency and financial changes require independent review. If unavailable, report PARTIALLY_VERIFIED with REVIEW_REQUIRED; do not simulate a second reviewer in the same context.
 
+## Agent orchestration
+- The main Claude Code conversation coordinates work and chooses agents automatically; the user does not need to name an agent in every prompt.
+- Classify each task as LIGHT, STANDARD or HIGH-RISK before delegating.
+- LIGHT: work directly when trivial, or use implementer plus relevant checks. Do not spawn reviewers for cosmetic or obviously local changes.
+- STANDARD: use implementer for bounded production changes and code-reviewer for independent review when the change is material.
+- HIGH-RISK: for authentication/authorization, migrations, concurrency, sensitive financial rules or comparable integrity risks, obtain independent test design before implementation when useful, then use implementer and only the specialist reviewers relevant to the changed boundary.
+- Invoke security-reviewer, platform-reviewer and frontend-reviewer only when their boundary is materially affected.
+- Do not run all agents by default. Avoid nested delegation and parallel production-code writers.
+- Explicit user instructions about which agent to use or not use override this default orchestration.
+
 ## Context budget and handoff
 - Read the smallest relevant code neighborhood. Search before opening large files. Do not scan the whole repository repeatedly.
 - Handoff: task/criteria, risk, scope, relevant paths, baseline/head or initial-file manifest, constraints, known evidence. Do not send the entire conversation.

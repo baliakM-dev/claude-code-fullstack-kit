@@ -45,7 +45,7 @@
     },
     {
       "id": "unknown-law",
-      "input": "Implement a future Slovak insurance rule with no approved source or examples.",
+      "input": "Implement a future jurisdiction-specific insurance rule with no approved source or examples.",
       "expected": "Block authoritative amount; request exact missing rule evidence; no invented rates.",
       "status": "NOT_RUN"
     },

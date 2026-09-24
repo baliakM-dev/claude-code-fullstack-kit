@@ -5,9 +5,8 @@ This kit selectively adapts documentation and a SQL example from
 commit `f0c06a01b0b7571b519cd43e16692b2483a24514` (inspected 2026-09-23). Upstream author: Rrezart Prebreza. License: MIT.
 This is an independent adaptation, not an upstream release or endorsement.
 
-The exact inspected paths, upstream Git blob IDs and destination files are recorded in
-[upstream-sources.json](docs/upstream-sources.json). The integration decisions and exclusions
-are in [upstream-integration.md](docs/upstream-integration.md).
+The adapted material is pinned to upstream commit `f0c06a01b0b7571b519cd43e16692b2483a24514`.
+The complete upstream MIT license notice is retained inside each affected skill.
 
 Preserve the complete upstream copyright and permission notice when redistributing the
 adapted portions. A copy accompanies each affected skill so individual skill exports retain it:
