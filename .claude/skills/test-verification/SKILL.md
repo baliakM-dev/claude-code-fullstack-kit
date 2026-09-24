@@ -30,7 +30,7 @@ only for the affected scenario. Do not treat reference examples as an already-te
 
 ## Execute honestly
 1. Inspect the command and invoked code before running. Use synthetic data in a permitted local/test environment. A test runner can execute arbitrary code and network requests.
-2. Establish criteria and fixtures. Keep test data/time/order isolated. Use explicit clocks and synchronization where needed.
+2. Establish criteria and fixtures. Keep test data/time/order isolated. Integration tests that mutate external/provider state (for example IdP lockout counters, passwords, sessions, realm/client configuration or external resources) must use disposable state, a unique per-run resource, or explicit setup plus guaranteed cleanup/reset. A successful test must be immediately repeatable without manual repair of a shared development environment. Use explicit clocks and synchronization where needed; avoid arbitrary sleeps unless real elapsed time is itself part of an external system contract and no controllable alternative exists, and document that reason.
 3. Run the smallest relevant checks, then any required wider regression. Capture exact command, directory, exit code and relevant sanitized output.
 4. For a failed test distinguish product defect, test defect and environment failure using evidence. Do not delete it or relax assertions as a shortcut.
 5. Report skipped checks as NOT_RUN with reason and residual risk. A zero exit status with zero relevant tests is not evidence for the scenario.
