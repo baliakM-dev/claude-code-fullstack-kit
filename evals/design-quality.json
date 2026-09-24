@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "suite": "Spring design quality 1.1.0",
+  "status": "NOT_RUN_IN_CLAUDE_CODE",
+  "cases": [
+    {
+      "id": "solid-single-service",
+      "input": "One cohesive concrete service implements one use case; request senior-quality design with no independent abstraction boundary.",
+      "expected": "Keep a simple concrete service; explain any real boundary before adding an interface. Do not create ServiceInterface/ServiceImpl for appearance.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "solid-one-vendor-boundary",
+      "input": "Core business rules depend directly on a vendor HTTP DTO and transport exceptions; one vendor exists.",
+      "expected": "Consider a narrow domain-facing contract/adapter because the boundary is real even with one implementation; do not forbid every single-implementation interface.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "srp-mixed-side-effects",
+      "input": "A controller calculates a fee, persists it, generates an export and sends email inline.",
+      "expected": "Identify independent reasons for change and failure/transaction semantics; propose the smallest useful separation rather than a class per line.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "lsp-silent-unsupported",
+      "input": "Two implementations share a calculation contract; one returns successful zero for an unsupported input.",
+      "expected": "Identify the violated contract and user-visible risk, require explicit unsupported behavior and relevant contract tests.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "ocp-parameter-only-year",
+      "input": "An annual update only changes validated rates; agent proposes a new strategy class and registry for every year.",
+      "expected": "Separate rule data from algorithms and retain the existing valid algorithm; no yearly classes without actual algorithm variation.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "dry-independent-semantics",
+      "input": "Two independent business regimes currently have identical arithmetic; request merging their entire rule models.",
+      "expected": "Distinguish semantic rule ownership from textual duplication; do not couple independent rules solely to remove similar lines.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "spring-proxy-regression",
+      "input": "A refactor moves an atomic operation into an internally called @Transactional method under proxy mode.",
+      "expected": "Flag lost transaction participation where no appropriate outer transaction exists, preserve working semantics and request a real mechanism test.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "design-review-preference",
+      "input": "Reviewer prefers a strategy pattern for working cohesive code but supplies no violated contract, criterion or impact.",
+      "expected": "Keep valid design or label OPTIONAL; no blocking finding solely labelled SOLID and no broad refactor.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "architecture-empty-selection",
+      "input": "An architecture rule passes but its package selector contains a typo and matches no production classes.",
+      "expected": "Reject the pass as evidence, correct the selection, verify actual classes and test discovery; do not allow empty selections to hide failure.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "architecture-future-boundary",
+      "input": "Bootstrap has no calculation module or multiple modules yet; request tests for those nonexistent boundaries.",
+      "expected": "Record NOT_APPLICABLE and an activation trigger; check existing boundaries without fake production classes. Add the deferred test when the boundary appears.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "design-read-only-reviewer",
+      "input": "Ask a Read/Glob/Grep-only reviewer to run ArchUnit and patch failing application code.",
+      "expected": "Preserve tool restrictions, inspect source and supplied evidence only; ask parent for an authorized test/implementation task and mark missing execution.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "quality-no-unrelated-preload",
+      "input": "Fix a harmless frontend label while Spring quality references exist in the kit.",
+      "expected": "Keep LIGHT and frontend scope; do not load all JVM references, add agents or run an unrelated architecture audit.",
+      "status": "NOT_RUN"
+    }
+  ]
+}

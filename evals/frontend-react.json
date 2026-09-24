@@ -1,0 +1,62 @@
+[
+  {
+    "id": "frontend-query-vs-effect",
+    "status": "NOT_RUN",
+    "prompt": "A page uses useEffect + axios + useState for a shared list already managed elsewhere by TanStack Query. Review and propose the smallest correction.",
+    "criteria": ["Recognize duplicated server-state ownership", "Prefer the existing query cache rather than another effect", "Avoid unrelated global-state or component refactors"]
+  },
+  {
+    "id": "frontend-bff-no-token",
+    "status": "NOT_RUN",
+    "prompt": "Implement React login state for a Spring BFF/Keycloak application. A teammate suggests storing access_token in localStorage and refreshing it in an interceptor.",
+    "criteria": ["Reject browser OAuth token storage/refresh", "Use the BFF session/auth-me contract", "Preserve CSRF handling for mutations"]
+  },
+  {
+    "id": "frontend-query-retry-semantics",
+    "status": "NOT_RUN",
+    "prompt": "A mutation that creates a payment retries every failure three times. Review it.",
+    "criteria": ["Do not blindly retry non-idempotent mutation", "Distinguish validation/auth/conflict from transient failure", "Require server idempotency before unsafe retries"]
+  },
+  {
+    "id": "frontend-cache-account-switch",
+    "status": "NOT_RUN",
+    "prompt": "After logout and login as another user, the dashboard briefly shows the previous user's cached data.",
+    "criteria": ["Identify principal-scoped cache leak", "Clear/remove affected cache on logout/account switch", "Do not solve by disabling all caching globally"]
+  },
+  {
+    "id": "frontend-form-state",
+    "status": "NOT_RUN",
+    "prompt": "A profile form has 18 fields, each in its own useState, duplicate validation and poor server-error mapping.",
+    "criteria": ["Use project form/schema tooling proportionately", "Keep backend validation authoritative", "Preserve user input and map field/global errors"]
+  },
+  {
+    "id": "frontend-no-overengineering",
+    "status": "NOT_RUN",
+    "prompt": "Review a simple accessible component with one local boolean and no server data.",
+    "criteria": ["Do not require TanStack Query or global store", "Do not invent generic hooks/contexts", "Return no blocking finding when correct"]
+  },
+  {
+    "id": "frontend-routing-auth",
+    "status": "NOT_RUN",
+    "prompt": "A route guard hides /admin from non-admin users; backend endpoint currently lacks role authorization.",
+    "criteria": ["State route guard is UX not authorization", "Require backend authorization", "Keep frontend routing fix separate from server security finding"]
+  },
+  {
+    "id": "frontend-performance",
+    "status": "NOT_RUN",
+    "prompt": "A reviewer proposes useMemo/useCallback/React.memo on every component to make the app senior-grade.",
+    "criteria": ["Reject blanket memoization", "Prioritize measured bottlenecks/network/list size", "Preserve simple code without evidence of a problem"]
+  },
+  {
+    "id": "frontend-tests-network",
+    "status": "NOT_RUN",
+    "prompt": "A component test mocks the custom query hook and asserts internal call counts for a critical profile flow.",
+    "criteria": ["Prefer user-visible behavior", "Use a network boundary such as MSW where practical", "Keep real BFF/OIDC evidence separate from mocked tests"]
+  },
+  {
+    "id": "frontend-money-date",
+    "status": "NOT_RUN",
+    "prompt": "React computes tax totals with Number and serializes a business LocalDate through new Date().toISOString().",
+    "criteria": ["Reject floating-point authority for financial values", "Preserve date-only semantics", "Keep authoritative calculation on backend"]
+  }
+]

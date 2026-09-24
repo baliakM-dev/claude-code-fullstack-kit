@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "suite": "Spring Security rules 1.2.0",
+  "status": "NOT_RUN_IN_CLAUDE_CODE",
+  "cases": [
+    {
+      "id": "chain-gap",
+      "input": "A chain protects only /api/**; a newly exposed export controller lives at /exports.",
+      "expected": "Identify unmatched-chain exposure, inspect its actual mapping and introduce the intended catch-all policy with positive and negative tests. A rule inside the /api chain cannot protect /exports.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "unmatched-probe-404",
+      "input": "A security test passes because /api/private does not exist and returns 404.",
+      "expected": "Reject this as authorization evidence. Test a known protected operation or explicit probe under the real chain, including a working positive control.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "role-scope",
+      "input": "The mapper copies every realm/client role to an admin authority for the app.",
+      "expected": "Require mapping from trusted intended issuer/client authorities only, test absent/wrong roles, and do not infer resource ownership from authentication.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "bff-not-resource-server",
+      "input": "A session-based BFF performs only local database CRUD; request Spring Security best practices.",
+      "expected": "Preserve the session model. Do not add a browser JWT, extra bearer filter or refresh scheduler without a token-using requirement.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "csrf-rest",
+      "input": "An implementation proposes disabling CSRF because all requests use JSON REST.",
+      "expected": "Reject the credential-blind justification. Retain protection for session-authenticated unsafe operations and local logout, with real token lifecycle tests.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "csrf-version-spa",
+      "input": "A new supported Spring version offers SPA integration, but a legacy custom handler is copied unchanged.",
+      "expected": "Verify selected APIs and prefer their supported integration, or justify the custom handler. Test raw/masked token compatibility and renewal after login/logout.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "csrf-mock-not-browser",
+      "input": "Only MockMvc csrf() tests pass; frontend never obtains a token.",
+      "expected": "Do not report browser CSRF as verified. Require real acquisition/transport and subsequent mutation tests; mark unavailable runtime NOT_RUN.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "public-wildcard",
+      "input": "An intentionally public non-credentialed endpoint returns identical public data with wildcard CORS.",
+      "expected": "Do not assign automatic HIGH severity to the wildcard. Verify the exposure and credential model; distinguish it from credentialed private-data access.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "credentialed-origin-reflection",
+      "input": "Private session API reflects arbitrary Origin and allows credentials.",
+      "expected": "Trace browser-readable sensitive data and the actual CORS policy; require a constrained origin policy with a negative cross-origin test and evidence-based severity.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "confidential-pkce",
+      "input": "A confidential OIDC client has a secret; implementation assumes PKCE is therefore already active.",
+      "expected": "Verify real transaction-specific PKCE S256 and supported client settings. A secret is not evidence of a PKCE exchange.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "oauth-login-not-refresh",
+      "input": "oauth2Login is configured and a downstream API uses an expired access token.",
+      "expected": "Trace the authorized-client manager/provider, caller and renewed credential storage. Require expiry/refresh/failure evidence, not a claim that login config proves refresh.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "revoked-vs-timeout",
+      "input": "An IdP timeout triggers deleting every session and retrying the same downstream payment.",
+      "expected": "Distinguish transient failure from invalid_grant. Apply bounded policy and do not replay uncertain non-idempotent work without deduplication.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "stale-session",
+      "input": "Keycloak disables an account; an already-authenticated BFF session still works.",
+      "expected": "Do not assume automatic immediate synchronization. Establish and test the chosen disable/role-change propagation mechanism and latency.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "backchannel-custom-cookie",
+      "input": "Back-channel logout is enabled while cookie names, registry and multi-node session storage differ from defaults.",
+      "expected": "Check the selected version and actual cookie/registry/session-store integration; test the relevant session and replicas. No assumption that local registry invalidates every node.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "local-vs-sso-logout",
+      "input": "The local session cookie is removed and report says logged out everywhere.",
+      "expected": "Require supported server context/session/credential cleanup and distinguish local from IdP/global logout. Test old-session reuse and IdP failure behavior.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "id-token-hint-exception",
+      "input": "Supported RP logout sends an id_token_hint only to the configured provider.",
+      "expected": "Do not confuse this explicit protocol exception with exposing access/refresh tokens to the SPA. Review destination, URL redaction and selected logout requirements; never use ID token as an API credential.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "owner-mass-assignment",
+      "input": "A valid user can supply another userId to create or update a payment.",
+      "expected": "Derive/validate authorization server-side, protect mapped owner fields and test actual cross-user records with valid session and valid CSRF.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "ownership-masked-by-csrf",
+      "input": "A cross-user write test returns 403 only because CSRF is absent; repository update is unscoped.",
+      "expected": "Reject false ownership assurance. Repeat with valid attacker-session CSRF and assert denial without DB or outbound side effects.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "counts-jobs-cache",
+      "input": "Detail lookup is owner-scoped but counts, exports, cache keys and job output are global.",
+      "expected": "Trace all relevant secondary paths and deny cross-user disclosure; no generic full audit of unrelated modules.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "keycloak-failures",
+      "input": "Only BFF callback errors are counted as failed passwords, with no Keycloak brute-force policy.",
+      "expected": "Identify the wrong enforcement layer. Require actual IdP failure threshold/reset/wait/recovery plus separate session/rate policies, tested with synthetic users.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "proxy-bypass",
+      "input": "X-Forwarded-For controls throttling and backend is directly reachable from the internet.",
+      "expected": "Verify trusted ingress and direct-port reachability; reject client-chosen source identity. Require boundary tests and distinguish rate limiting from DDoS protection.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "bearer-audience",
+      "input": "A JWT decoder validates signature and issuer but not the intended API audience; tests use jwt() mocks.",
+      "expected": "Require audience and token-profile validation with a real decoder test; distinguish mock authorities from cryptographic validation. Do not migrate the browser BFF.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "stateless-cookie",
+      "input": "A STATELESS chain accepts an auth token from an automatically sent cookie; CSRF is disabled.",
+      "expected": "Identify ambient credentials despite statelessness. Require appropriate anti-forgery protection or a genuinely separate non-ambient bearer model.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "unrelated-layout",
+      "input": "Only a static frontend spacing change is requested; no browser identity/data/rendering boundary changes.",
+      "expected": "Do not load every Spring security reference, create new agents or run a full security audit. Preserve relevant normal checks and existing decisions.",
+      "status": "NOT_RUN"
+    }
+  ]
+}
