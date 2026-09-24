@@ -27,6 +27,7 @@
 - Do not edit an expected financial result merely to match the implementation. Resolve the independent rule first.
 - Keep unit/integration/security checks in scope. Report real commands, directory, exit status, checked revision/manifest, and unexecuted checks with reasons.
 - Separate CONFIRMED defects, NEEDS_VERIFICATION risks and OPTIONAL improvements. Never invent test counts, coverage, benchmark results or reviewer approval.
+- When changed behavior, evidence or a project decision makes directly related documentation stale, update that bounded documentation or report the mismatch. Do not broaden a code task into a general documentation rewrite.
 - After two unsuccessful fixes of the same failure stop blind retries, obtain new evidence and change the hypothesis.
 - For auth, migrations, concurrency and financial changes require independent review. If unavailable, report PARTIALLY_VERIFIED with REVIEW_REQUIRED; do not simulate a second reviewer in the same context.
 
@@ -40,6 +41,8 @@
 - Do not run all agents by default. Avoid nested delegation and parallel production-code writers.
 - Never spawn a placeholder, exploratory, empty or no-op agent. Every invocation needs a named role, bounded objective, relevant context and expected evidence/output.
 - Before invoking another agent, identify the independent value it adds. Do not invoke an agent merely because one exists or because a risk category has a matching role.
+- In remediation/review tasks that say to fix confirmed findings only: CONFIRMED/MUST findings may be implemented; SHOULD and LATER items are report-only by default. Promote a SHOULD item to implementation only when it is necessary to verify or safely fix a confirmed finding, or when the user explicitly asks for additional hardening.
+- Invoke implementation-explainer only when the user asks how code works, asks for a walkthrough/why explanation, or explicitly asks to be taught the completed change. Do not append it automatically to normal delivery workflows.
 - Explicit user instructions about which agent to use or not use override this default orchestration.
 
 ## Context budget and handoff
