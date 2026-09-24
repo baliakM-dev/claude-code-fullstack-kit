@@ -34,7 +34,7 @@ Optional domain skill:
 
 ## Usage guide
 
-For practical guidance on when to use each agent and skill, recommended LIGHT / STANDARD / HIGH-RISK workflows, example prompts and token-efficient usage, see [docs/how-to-use.md](docs/how-to-use.md).
+For practical guidance on when to use each agent and skill, recommended LIGHT / STANDARD / HIGH-RISK workflows and token-efficient usage, see [docs/how-to-use.md](docs/how-to-use.md). Copy-ready examples for endpoint development, React, security/BFF, Flyway, bug fixes and reviews are in [docs/prompt-examples.md](docs/prompt-examples.md).
 
 ## Engineering principles
 
