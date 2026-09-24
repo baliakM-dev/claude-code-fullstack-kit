@@ -25,5 +25,11 @@ class AgentOrchestrationTests(unittest.TestCase):
         self.assertIn("SHOULD and LATER items are report-only by default", text)
         self.assertIn("fix confirmed findings only", text)
 
+    def test_partial_subagent_is_resumed_before_respawn(self):
+        text = (ROOT / ".claude/policies/core.md").read_text(encoding="utf-8")
+        self.assertIn("resume that same agent with `SendMessage`", text)
+        self.assertIn("before spawning a replacement", text)
+        self.assertIn("Do not raise `maxTurns` merely because one complex task needed continuation", text)
+
 if __name__ == "__main__":
     unittest.main()
