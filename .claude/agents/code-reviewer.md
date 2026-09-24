@@ -19,4 +19,6 @@ For frontend-only or mixed React/TypeScript scope, read [react-typescript](../sk
 
 For security-relevant scope, also read [application-security](../skills/application-security/SKILL.md) and the applicable shared Spring/browser/identity reference. Check the actual enforcing boundary and denial side effects; do not replace independent security review when the delivery policy requires it.
 
+For framework code, check the resolved/project-selected version rather than cargo-culting historical examples. Flag deprecated/obsolete APIs, redundant checked exceptions, unused imports, warnings introduced by the change and unnecessary compatibility code when evidence shows they are real. Treat equivalent lambda vs method-reference syntax as style unless the project has an explicit convention.
+
 Use static findings to distinguish confirmed paths from hypotheses. Do not claim to have rerun tests. A dynamic uncertainty can require a test-engineer task. Return findings with evidence and coverage gaps; do not implement fixes. Return NO_BLOCKING_FINDINGS only for the checked scope, not a guarantee of correctness.
