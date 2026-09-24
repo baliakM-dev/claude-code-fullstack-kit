@@ -1,451 +1,186 @@
-# Repository name
+# Claude Code Fullstack Kit
 
-`claude-code-fullstack-kit`
+Reusable Claude Code agents, skills and engineering guardrails for secure, maintainable full-stack development.
 
-## GitHub About
+The kit is designed to support real software delivery rather than prompt-only code generation. It separates implementation, independent review, testing, security and platform concerns while keeping project-specific decisions outside the reusable core.
 
-Reusable Claude Code agents and skills for secure full-stack development with Java/Spring Boot, React/TypeScript, PostgreSQL, Keycloak, Docker and modern DevOps practices.
+## What is included
 
-## Short description
+### Agents
 
-A reusable Claude Code development kit with universal agents, skills and workflows for implementation, testing, code review, security, frontend, database, Docker and observability.
+- `implementer` — implements bounded changes and relevant tests.
+- `code-reviewer` — read-only evidence-based correctness and maintainability review.
+- `security-reviewer` — read-only application-security review.
+- `test-engineer` — independent test design and authorized verification.
+- `frontend-reviewer` — read-only React/TypeScript review.
+- `platform-reviewer` — read-only database, Docker and operational review.
 
-## Suggested topics
+### Skills
 
-`claude-code` `ai-agents` `developer-tools` `spring-boot` `java` `react` `typescript` `postgresql` `keycloak` `docker` `devops` `code-review` `testing` `security` `observability`
+Core reusable skills:
 
-# README
+- `change-planning`
+- `spring-backend`
+- `react-typescript`
+- `postgresql-migrations`
+- `application-security`
+- `test-verification`
+- `evidence-review`
+- `delivery-operations`
 
-## Claude Code Fullstack Kit
+Optional domain skill:
 
-A reusable Claude Code development kit for building and reviewing secure, maintainable full-stack applications.
+- `financial-calculations` — deterministic, versioned financial-rule implementation and verification.
 
-The repository contains reusable Claude Code agents, skills, engineering rules and validation workflows designed to support real software development rather than only code generation.
+## Engineering principles
 
-The goal is to use AI as an engineering assistant while keeping architecture decisions, security, testing and human review explicit.
-
-## Main principles
-
-* Keep agents reusable across projects.
-* Prefer simple, correct solutions over unnecessary abstraction.
-* Apply security by default without disabling controls to make development easier.
-* Review code based on evidence instead of stylistic preference.
-* Separate implementation, testing and independent review.
-* Use framework-supported mechanisms before building custom infrastructure.
-* Preserve existing correct code.
-* Avoid introducing technologies without a concrete use case.
-* Distinguish verified behaviour from assumptions.
-* Keep production and development concerns separate.
-
-## Agents
-
-### `implementer`
-
-Implements bounded changes using the relevant project instructions and skills.
-
-Responsibilities include:
-
-* minimal complete implementation
-* preserving existing architecture
-* running appropriate checks
-* avoiding unrelated refactoring
-* respecting Git safety rules
-* reporting unresolved risks and required reviews
-
-### `code-reviewer`
-
-Performs independent evidence-based code review.
-
-Reviews:
-
-* functional correctness
-* null handling
-* contracts
-* transactions
-* concurrency
-* persistence
-* maintainability
-* ownership boundaries
-* regression risk
-
-The reviewer does not change code and does not invent findings simply to produce a review.
-
-### `security-reviewer`
-
-Reviews authentication, authorization and application security boundaries.
-
-Typical areas:
-
-* Spring Security
-* Keycloak / OIDC / OAuth2
-* BFF architecture
-* sessions and cookies
-* CSRF / CORS
-* object-level authorization
-* secret handling
-* proxy trust
-* abuse protection
-* security regression scenarios
-
-### `test-engineer`
-
-Designs behavioural tests independently from implementation and verifies changes with real evidence.
-
-Supports:
-
-* unit tests
-* integration tests
-* database tests
-* HTTP/security tests
-* Testcontainers
-* frontend tests
-* browser flows
-* concurrency scenarios
-* regression testing
-
-### `frontend-reviewer`
-
-Read-only reviewer for React and TypeScript changes.
-
-Reviews:
-
-* component architecture
-* server state vs local state
-* TanStack Query
-* Axios/API clients
-* React Hook Form
-* Zod
-* accessibility
-* error handling
-* performance
-* frontend security
-* test quality
-
-### `platform-reviewer`
-
-Read-only reviewer for infrastructure and operational changes.
-
-Reviews:
-
-* Docker
-* Docker Compose
-* runtime security
-* networking
-* persistence
-* health checks
-* Flyway rollout
-* backup/restore
-* Grafana
-* Prometheus
-* Loki
-* Tempo
-* OpenTelemetry
-
-## Skills
-
-The kit currently contains reusable skills for:
-
-* change planning
-* Spring backend development
-* React/TypeScript
-* PostgreSQL and Flyway migrations
-* application security
-* behavioural test verification
-* evidence-based code review
-* delivery and operations
-* deterministic financial calculations
-
-Skills are loaded only when relevant to reduce unnecessary context consumption.
-
-## Backend engineering
-
-The Spring skill covers topics such as:
-
-* Spring Boot architecture
-* REST APIs
-* DTO boundaries
-* validation
-* transaction management
-* JPA
-* null safety
-* idempotency
-* optimistic locking
-* transaction failures
-* external integrations
-* version compatibility
-* maintainable SOLID design
-
-The kit intentionally avoids patterns such as creating `ServiceInterface + ServiceImpl` for every service when no abstraction is required.
-
-## Database and Flyway
-
-Database guidance includes:
-
-* PostgreSQL schema design
-* functional dependencies
-* 1NF / 2NF / 3NF / BCNF
-* candidate keys
-* foreign keys and constraints
-* indexing
-* query-driven optimisation
-* JPA modelling
-* concurrency
-* Flyway migration safety
-* expand/migrate/switch/contract migrations
-* large-table backfills
-* rollback/recovery planning
-
-Normalization is not treated as a dogma. Intentional denormalization is acceptable when its purpose, consistency model and operational consequences are documented.
-
-## Security
-
-The security model supports server-side BFF architectures using Spring Security and Keycloak.
-
-Typical flow:
-
-```text
-Browser
-   |
-   | session cookie + CSRF
-   v
-Spring Boot BFF
-   |
-   | OAuth2/OIDC Authorization Code
-   v
-Keycloak
-```
-
-Principles include:
-
-* no access tokens in React
-* no refresh tokens in browser storage
-* Authorization Code + PKCE
-* server-side sessions
-* CSRF protection for cookie-authenticated mutations
-* issuer + subject identity
-* default-deny authorization
-* object-level ownership checks
-* trusted reverse-proxy handling
-* no custom authentication framework when Spring Security already provides the mechanism
-
-## React and TypeScript
-
-Frontend guidance supports:
-
-* React
-* TypeScript
-* Vite
-* Axios
-* TanStack Query
-* React Hook Form
-* Zod
-* React Router
-* Vitest
-* React Testing Library
-* MSW
-* Playwright
-* accessibility testing
-
-State is intentionally separated:
-
-```text
-Server state
-→ TanStack Query
-
-Form state
-→ React Hook Form
-
-Local UI state
-→ useState / useReducer
-
-Global client state
-→ only when a real shared-state requirement exists
-```
-
-The kit avoids unnecessary `useEffect`, blanket memoization and speculative abstractions.
-
-## Docker and observability
-
-Operational guidance includes:
-
-* multi-stage Docker builds
-* non-root runtime users
-* minimal images
-* secret separation
-* `.dockerignore`
-* health/readiness checks
-* persistent volumes
-* Docker networking
-* DEV/PROD separation
-* resource management
-
-Observability guidance supports:
-
-```text
-Spring Boot
-   |
-OpenTelemetry
-   |
-   +--> Prometheus --> Grafana
-   +--> Loki -------> Grafana
-   +--> Tempo ------> Grafana
-```
-
-It also includes rules for:
-
-* metric cardinality
-* structured logs
-* trace/log correlation
-* sensitive-data handling
-* telemetry failure isolation
+- Prefer the smallest complete solution.
+- Preserve correct existing architecture unless evidence justifies change.
+- Keep security controls enabled; do not weaken them to make tests pass.
+- Separate server state, form state and local UI state on the frontend.
+- Treat database constraints, transactions, concurrency and migrations as correctness concerns.
+- Use framework-supported authentication/session mechanisms before custom infrastructure.
+- Keep reviewers independent and read-only.
+- Use real evidence for database, browser/OIDC and integration claims.
+- Avoid speculative abstractions and unnecessary services.
+- Do not automatically commit, push, deploy or run destructive Git operations.
 
 ## Risk-based workflow
 
-The kit intentionally avoids running every agent for every task.
-
 ### LIGHT
-
-Small, low-risk changes:
 
 ```text
 implementer
-→ relevant tests
+-> relevant checks
 ```
 
 ### STANDARD
 
-Normal application changes:
-
 ```text
 implementer
-→ code-reviewer
+-> code-reviewer
 ```
 
 ### HIGH-RISK
 
-Security, migrations, concurrency or financial logic:
+For security, migrations, concurrency or financial logic:
 
 ```text
 test-engineer DESIGN
-→ implementer
-→ code-reviewer
-→ security-reviewer / platform-reviewer when relevant
-→ test-engineer VERIFY when useful
+-> implementer
+-> code-reviewer
+-> security-reviewer / platform-reviewer when relevant
+-> test-engineer VERIFY when useful
 ```
 
 Only one agent should modify production code at a time.
 
-## Example workflow
-
-A security-sensitive task might look like:
-
-```text
-Main Claude Code session
-        |
-        +--> test-engineer (DESIGN)
-        |
-        +--> implementer
-        |
-        +--> code-reviewer
-        |
-        +--> security-reviewer
-```
-
-Agents should not recursively delegate to additional agents unless the workflow explicitly requires it.
-
-## Project-specific configuration
-
-The agents and skills are intended to stay reusable.
-
-Project-specific decisions should live outside them, for example:
-
-```text
-CLAUDE.md
-docs/project-profile.md
-docs/tasks/
-```
-
-Examples of project-specific decisions:
-
-* chosen architecture
-* supported Java/Spring versions
-* authentication model
-* session lifetime
-* deployment environment
-* domain rules
-* application-specific acceptance criteria
-
-This allows the same agents and skills to be reused across multiple projects.
-
 ## Installation
 
-Copy the reusable Claude Code configuration into your project:
+Copy the complete shared Claude Code configuration into your project:
 
 ```text
 .claude/
 ├── agents/
-└── skills/
+├── skills/
+├── policies/
+└── settings.json
 ```
 
-Then add project-specific instructions in:
+Then create project-specific instructions from the templates:
 
 ```text
-CLAUDE.md
+templates/CLAUDE.md         -> CLAUDE.md
+templates/project-profile.md -> docs/project-profile.md
 ```
 
-Run Claude Code from the repository root so it can discover the project instructions and `.claude` configuration.
+Review `.claude/settings.json` before adopting it. Local overrides belong in `.claude/settings.local.json`, which should not be committed.
 
-## Recommended usage
+Project-specific decisions should stay outside the reusable agents and skills, for example:
 
-Instead of asking Claude to implement a large feature in one step, use bounded tasks with explicit acceptance criteria.
+- architecture and module boundaries
+- selected Java/Spring/React versions
+- authentication model
+- session lifetimes
+- deployment environment
+- domain rules
+- acceptance criteria
 
-Example:
+## Example task prompt
 
 ```text
-Read CLAUDE.md and relevant skills.
+Read CLAUDE.md and only the relevant skills.
 
-Use the implementer agent to implement this task.
+Use the implementer agent to implement this bounded task.
 
 After implementation:
-- run the relevant tests
-- request independent code review
-- request security review if the change modifies a security boundary
+- run relevant tests,
+- request independent code review,
+- request security or platform review only if the change touches those boundaries.
 
 Do not commit, push or deploy.
 ```
 
-## Validation philosophy
+## Validation
 
-A passing test suite is evidence only for what was actually tested.
+The repository ships structural regression tests and a static validator.
 
-The kit distinguishes between:
+Run:
 
-* implemented
-* statically reviewed
-* dynamically verified
-* integration tested
-* production verified
+```bash
+python scripts/validate_kit.py
+python -m unittest discover -s tests -p "test_*.py"
+python .claude/skills/spring-backend/scripts/verify_java_examples.py
+```
 
-It avoids claims such as "production-ready" or "secure" without appropriate evidence.
+The GitHub Actions workflow runs these checks on pushes and pull requests.
 
-## Status
+These checks validate repository structure and selected invariants. They do **not** prove Claude Code behavior, application security, production readiness or model quality.
 
-The kit is actively evolving based on real development tasks and benchmark scenarios.
+Behavioral evaluation scenarios live under `evals/` and remain separate from structural validation.
 
-Current focus areas include:
+## Technology coverage
 
-* Spring Boot / Keycloak BFF
-* React frontend architecture
-* PostgreSQL / Flyway
-* Docker and observability
-* application security
-* testing and independent review
-* context/token-efficient Claude Code workflows
+The kit includes guidance for:
+
+- Java / Spring Boot
+- Spring Security
+- Keycloak / OAuth2 / OIDC / BFF
+- React / TypeScript / Vite
+- Axios / TanStack Query
+- React Hook Form / Zod
+- PostgreSQL / JPA / Flyway
+- Docker / Docker Compose
+- Prometheus / Grafana / Loki / Tempo / OpenTelemetry
+- testing, concurrency, idempotency and null-safety
+
+The guidance is intentionally project-agnostic. A project is free to use only the relevant parts.
+
+## Repository structure
+
+```text
+.
+├── .claude/
+│   ├── agents/
+│   ├── skills/
+│   ├── policies/
+│   └── settings.json
+├── .github/workflows/
+├── evals/
+├── scripts/
+├── templates/
+├── tests/
+├── verification/
+├── kit-manifest.json
+├── LICENSE
+├── README.md
+└── THIRD_PARTY_NOTICES.md
+```
+
+## Third-party material
+
+Some Spring-related guidance was selectively adapted from `rrezartprebreza/spring-boot-skills` under the MIT License. Required attribution is retained in `THIRD_PARTY_NOTICES.md` and the corresponding `LICENSE-UPSTREAM.txt` files.
 
 ## License
 
-Choose a repository license appropriate for how you want others to reuse the kit.
-
-For broad public reuse, MIT or Apache-2.0 are common options.
-
-Before publishing, retain any required third-party attribution notices included in the repository.
+This repository is licensed under the MIT License. See `LICENSE`.
