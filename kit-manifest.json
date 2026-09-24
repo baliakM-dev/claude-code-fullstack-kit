@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "kit_version": "1.5.2",
+  "kit_version": "1.5.3",
   "prepared_at": "2026-09-24",
   "agents": [
     "implementer",
@@ -46,6 +46,8 @@
     "templates/CLAUDE.md",
     "templates/project-profile.md",
     "docs/how-to-use.md",
-    "docs/prompt-examples.md"
+    "docs/prompt-examples.md",
+    "tests/test_test_verification_efficiency.py",
+    "tests/test_agent_orchestration.py"
   ]
 }
