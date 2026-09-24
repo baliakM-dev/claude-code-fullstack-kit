@@ -25,3 +25,7 @@ A/B benchmark, authorization test or token-saving claim follows from their exist
 ## Auth benchmark learnings 1.5.3
 
 `cases.json` includes new NOT_RUN regressions derived from a real Spring Security/Keycloak BFF benchmark: redundant historical `throws Exception`, Spring Security 7 SPA CSRF idioms, persistent IdP lockout state, duplicate security evidence and placeholder/no-op agent delegation. These cases remain behavioral scenarios; structural Python tests only verify that the corresponding kit rules remain present.
+
+## Scope and learning update 1.5.4
+
+`cases.json` adds NOT_RUN regressions for fix-only remediation scope, security-sensitive failure output, code/tests/docs/evidence consistency, orphan fixtures after test redesign, and the read-only `implementation-explainer`. The explainer scenarios verify educational flow, framework-magic separation and resistance to unsolicited refactoring. Structural tests assert the instructions exist; only real Claude Code runs can validate model behavior.
