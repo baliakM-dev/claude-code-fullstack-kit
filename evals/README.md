@@ -21,3 +21,13 @@ Keep the shipped case JSON files as unexecuted scenario definitions. Record real
 `community-patterns.json` adds 16 NOT_RUN response scenarios. Keep them separate from the
 52 previous scenario definitions and from the executable Java helper. No model evaluation,
 A/B benchmark, authorization test or token-saving claim follows from their existence.
+
+## Auth benchmark learnings 1.5.3
+
+`cases.json` includes new NOT_RUN regressions derived from a real Spring Security/Keycloak BFF benchmark: redundant historical `throws Exception`, Spring Security 7 SPA CSRF idioms, persistent IdP lockout state, duplicate security evidence and placeholder/no-op agent delegation. These cases remain behavioral scenarios; structural Python tests only verify that the corresponding kit rules remain present.
+
+## Scope and learning update 1.5.4
+
+`cases.json` adds NOT_RUN regressions for fix-only remediation scope, security-sensitive failure output, code/tests/docs/evidence consistency, orphan fixtures after test redesign, and the read-only `implementation-explainer`. The explainer scenarios verify educational flow, framework-magic separation and resistance to unsolicited refactoring. Structural tests assert the instructions exist; only real Claude Code runs can validate model behavior.
+
+The 1.5.4 scenarios also include a resume-before-respawn case: when a custom subagent reaches `maxTurns` and returns PARTIAL, continue the same resumable agent with `SendMessage` for the remaining bounded work instead of starting a duplicate agent or immediately raising its turn limit.

@@ -22,6 +22,7 @@ Examples:
 - `test-engineer` designs or executes behavioral tests.
 - `frontend-reviewer` reviews React/TypeScript changes.
 - `platform-reviewer` reviews database, Docker and operational changes.
+- `implementation-explainer` explains existing code, execution flow, design rationale and framework magic without editing or reviewing it.
 
 Skills define **how that work should be done**.
 
@@ -318,6 +319,40 @@ Check:
 - backup/restore implications
 ```
 
+## Using the implementation-explainer
+
+Use `implementation-explainer` when you want to understand code that already exists or a completed change.
+
+Typical prompts:
+
+```text
+Explain SecurityConfig so I understand the full request/login/session flow.
+Separate what our code does from what Spring Security does automatically.
+Explain why each important piece exists and what would break if it were removed.
+```
+
+or:
+
+```text
+Explain the feature we just implemented.
+Walk one realistic request end-to-end through controller, service, transaction and persistence.
+Finish with the mental model I should remember.
+```
+
+It is intentionally read-only and educational. It must not edit files, run commands, invent refactors or turn a walkthrough into an unsolicited review. Do not invoke it after every implementation; use it only when the user asks for explanation, a walkthrough or to be taught the completed change.
+
+## Remediation scope
+
+When a review/remediation task says to fix confirmed findings only:
+
+```text
+CONFIRMED / MUST -> may implement
+SHOULD           -> report only by default
+LATER            -> report only
+```
+
+Promote a SHOULD item only when it is necessary to verify or safely fix a confirmed finding, or when the user explicitly requests additional hardening. This prevents optional coverage from silently growing into another implementation/review loop.
+
 ## Skills and when they matter
 
 ### `change-planning`
@@ -443,6 +478,41 @@ test-engineer VERIFY
 
 The expected result must come from an approved rule or independent fixture, not from the implementation itself.
 
+## Continuing a subagent that hits maxTurns
+
+A `maxTurns` stop is a partial run, not automatically a failed implementation.
+
+For a resumable custom agent working on the same bounded task:
+
+```text
+agent reaches maxTurns / PARTIAL
+        ↓
+SendMessage to the same agent ID/name
+        ↓
+continue only the unfinished work
+        ↓
+DONE / another evidence-based continuation if still justified
+```
+
+Do not spawn a fresh copy of the same agent merely to continue where it stopped. The follow-up should be concise and focused:
+
+```text
+Continue the same task.
+
+Already complete:
+- <completed item>
+- <completed item>
+
+Remaining:
+- <unfinished bounded item>
+- <required check>
+
+Do not revisit completed decisions.
+Do not expand scope.
+```
+
+Use a fresh agent only when the old agent cannot be resumed, the task materially changed, independent fresh context is intentional, or the previous context became misleading. Do not increase an agent's `maxTurns` after one exceptional task; use repeated benchmark evidence before changing the limit.
+
 ## Token and context efficiency
 
 The kit is intentionally designed to avoid unnecessary agent chains.
@@ -459,6 +529,10 @@ For better results and lower context usage:
 8. Treat reviewer findings as evidence to validate, not mandatory refactoring requests.
 9. Stop blind retry loops after repeated failure and gather new evidence.
 10. Keep project-specific decisions in `CLAUDE.md` and the project profile, not in reusable agents.
+11. In fix-only work, do not implement SHOULD/LATER hardening by default.
+12. Do not invoke implementation-explainer unless the user asks to understand the code.
+13. Resume a resumable PARTIAL custom subagent before respawning another copy for the same task.
+14. Keep continuation prompts focused on remaining work; do not resend completed analysis.
 
 ## Project-specific defaults
 

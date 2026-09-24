@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "kit_version": "1.5.2",
+  "kit_version": "1.5.4",
   "prepared_at": "2026-09-24",
   "agents": [
     "implementer",
@@ -8,7 +8,8 @@
     "security-reviewer",
     "test-engineer",
     "platform-reviewer",
-    "frontend-reviewer"
+    "frontend-reviewer",
+    "implementation-explainer"
   ],
   "skills": [
     "change-planning",
@@ -46,6 +47,10 @@
     "templates/CLAUDE.md",
     "templates/project-profile.md",
     "docs/how-to-use.md",
-    "docs/prompt-examples.md"
+    "docs/prompt-examples.md",
+    "tests/test_test_verification_efficiency.py",
+    "tests/test_agent_orchestration.py",
+    ".claude/agents/implementation-explainer.md",
+    "tests/test_implementation_explainer.py"
   ]
 }

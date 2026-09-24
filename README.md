@@ -14,6 +14,7 @@ The kit is designed to support real software delivery rather than prompt-only co
 - `test-engineer` — independent test design and authorized verification.
 - `frontend-reviewer` — read-only React/TypeScript review.
 - `platform-reviewer` — read-only database, Docker and operational review.
+- `implementation-explainer` — read-only educational walkthrough of existing code, runtime flow and framework-provided behavior.
 
 ### Skills
 
@@ -77,7 +78,13 @@ test-engineer DESIGN
 -> test-engineer VERIFY when useful
 ```
 
-Only one agent should modify production code at a time.
+Only one agent should modify production code at a time. The implementation explainer is opt-in for learning/walkthrough requests and is not an automatic delivery step.
+
+### Continue partial subagents instead of restarting
+
+If a resumable custom subagent reaches its `maxTurns` limit and returns a partial result, the main Claude Code conversation should resume that same agent with `SendMessage` using its agent ID/name before spawning another instance for the same bounded task. The continuation should contain only the unfinished work and preserve the original scope, so completed discovery and analysis are not repeated.
+
+Do not increase `maxTurns` reactively after one long task. Keep the existing limit unless repeated benchmarks show that a specific agent consistently stops too early. Start a fresh agent only when continuation is unavailable, the task materially changed, intentionally fresh/independent context is required, or the previous context became misleading.
 
 ## Installation
 
