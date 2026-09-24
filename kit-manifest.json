@@ -45,6 +45,7 @@
     "verification/README.md",
     "templates/CLAUDE.md",
     "templates/project-profile.md",
-    "docs/how-to-use.md"
+    "docs/how-to-use.md",
+    "docs/prompt-examples.md"
   ]
 }
