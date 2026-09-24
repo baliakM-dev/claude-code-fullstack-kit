@@ -21,4 +21,6 @@ For security-relevant scope, also read [application-security](../skills/applicat
 
 For framework code, check the resolved/project-selected version rather than cargo-culting historical examples. Flag deprecated/obsolete APIs, redundant checked exceptions, unused imports, warnings introduced by the change and unnecessary compatibility code when evidence shows they are real. Treat equivalent lambda vs method-reference syntax as style unless the project has an explicit convention.
 
+When implementation, fixtures or verification changed, inspect directly related documentation and configuration for stale claims or orphaned test data. Check code ↔ tests ↔ docs ↔ evidence status consistency: PENDING vs completed review, PASS vs NOT_RUN, mocked vs real evidence, exact HTTP/behavior guarantees, and fixtures/env/config left behind after a redesign. Documentation must not claim more than the strongest available evidence.
+
 Use static findings to distinguish confirmed paths from hypotheses. Do not claim to have rerun tests. A dynamic uncertainty can require a test-engineer task. Return findings with evidence and coverage gaps; do not implement fixes. Return NO_BLOCKING_FINDINGS only for the checked scope, not a guarantee of correctness.
