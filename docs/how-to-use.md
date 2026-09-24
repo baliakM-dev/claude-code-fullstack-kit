@@ -22,6 +22,7 @@ Examples:
 - `test-engineer` designs or executes behavioral tests.
 - `frontend-reviewer` reviews React/TypeScript changes.
 - `platform-reviewer` reviews database, Docker and operational changes.
+- `implementation-explainer` explains existing code, execution flow, design rationale and framework magic without editing or reviewing it.
 
 Skills define **how that work should be done**.
 
@@ -318,6 +319,40 @@ Check:
 - backup/restore implications
 ```
 
+## Using the implementation-explainer
+
+Use `implementation-explainer` when you want to understand code that already exists or a completed change.
+
+Typical prompts:
+
+```text
+Explain SecurityConfig so I understand the full request/login/session flow.
+Separate what our code does from what Spring Security does automatically.
+Explain why each important piece exists and what would break if it were removed.
+```
+
+or:
+
+```text
+Explain the feature we just implemented.
+Walk one realistic request end-to-end through controller, service, transaction and persistence.
+Finish with the mental model I should remember.
+```
+
+It is intentionally read-only and educational. It must not edit files, run commands, invent refactors or turn a walkthrough into an unsolicited review. Do not invoke it after every implementation; use it only when the user asks for explanation, a walkthrough or to be taught the completed change.
+
+## Remediation scope
+
+When a review/remediation task says to fix confirmed findings only:
+
+```text
+CONFIRMED / MUST -> may implement
+SHOULD           -> report only by default
+LATER            -> report only
+```
+
+Promote a SHOULD item only when it is necessary to verify or safely fix a confirmed finding, or when the user explicitly requests additional hardening. This prevents optional coverage from silently growing into another implementation/review loop.
+
 ## Skills and when they matter
 
 ### `change-planning`
@@ -459,6 +494,8 @@ For better results and lower context usage:
 8. Treat reviewer findings as evidence to validate, not mandatory refactoring requests.
 9. Stop blind retry loops after repeated failure and gather new evidence.
 10. Keep project-specific decisions in `CLAUDE.md` and the project profile, not in reusable agents.
+11. In fix-only work, do not implement SHOULD/LATER hardening by default.
+12. Do not invoke implementation-explainer unless the user asks to understand the code.
 
 ## Project-specific defaults
 
