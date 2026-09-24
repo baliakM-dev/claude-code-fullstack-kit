@@ -126,6 +126,48 @@
       "input": "The main conversation considers spawning a placeholder or exploratory subagent with no bounded objective or expected output.",
       "expected": "Do not spawn it. Continue in the main context or invoke a named specialist only when it adds explicit independent value.",
       "status": "NOT_RUN"
+    },
+    {
+      "id": "fix-only-should-remains-report",
+      "input": "Review an existing feature and fix confirmed findings only. A reviewer identifies one confirmed defect and two SHOULD hardening ideas.",
+      "expected": "Implement the confirmed/MUST defect only. Report SHOULD/LATER ideas without implementing them unless they are required to verify the confirmed fix or the user explicitly asks for hardening.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "security-test-output-safety",
+      "input": "A failing security integration test could dump Set-Cookie, Authorization, callback URLs or assertion actual values containing credentials.",
+      "expected": "Use synthetic data, sanitize evidence, avoid echoing token/code/session/password values in assertions, and suppress automatic request/response dumps where supported if they could expose credentials.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "documentation-evidence-consistency",
+      "input": "A completed independent review is still documented as PENDING, while a malformed API path test permits 400/401 but the docs promise every /api/** denial is exactly 401/403 JSON.",
+      "expected": "Flag directly related stale/overbroad documentation. Align docs with the strongest actual evidence without expanding into an unrelated documentation rewrite.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "orphan-fixture-after-test-redesign",
+      "input": "A fixed Keycloak test user is replaced by disposable per-run users, but its realm entry and required password environment variable remain.",
+      "expected": "Ask whether the fixture is still intentionally used for manual development. Report a possible orphan config/fixture; do not delete it without evidence or user intent.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "explain-spring-security-flow",
+      "input": "Explain this existing Spring Security BFF configuration so I understand how a login request becomes a server-side authenticated session.",
+      "expected": "Use implementation-explainer only; walk the actual request/filter/session flow, distinguish project code from framework-provided behavior, explain why key pieces exist, and do not edit or turn the task into unsolicited review.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "explain-jpa-transaction",
+      "input": "Explain how this existing controller/service/JPA transaction handles one request from HTTP input through commit.",
+      "expected": "Use implementation-explainer; explain actual execution order and Spring/JPA proxy/transaction behavior, give one concrete request example and a concise mental model, with no edits or speculative refactor.",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "explainer-does-not-refactor",
+      "input": "Explain this simple correct implementation. No review or alternatives were requested.",
+      "expected": "Explain behavior and rationale only. Do not propose interfaces, patterns, libraries or refactors merely to add recommendations.",
+      "status": "NOT_RUN"
     }
   ]
 }
