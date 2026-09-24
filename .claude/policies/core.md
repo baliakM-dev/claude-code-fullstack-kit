@@ -38,6 +38,8 @@
 - HIGH-RISK: for authentication/authorization, migrations, concurrency, sensitive financial rules or comparable integrity risks, obtain independent test design before implementation when useful, then use implementer and only the specialist reviewers relevant to the changed boundary.
 - Invoke security-reviewer, platform-reviewer and frontend-reviewer only when their boundary is materially affected.
 - Do not run all agents by default. Avoid nested delegation and parallel production-code writers.
+- Never spawn a placeholder, exploratory, empty or no-op agent. Every invocation needs a named role, bounded objective, relevant context and expected evidence/output.
+- Before invoking another agent, identify the independent value it adds. Do not invoke an agent merely because one exists or because a risk category has a matching role.
 - Explicit user instructions about which agent to use or not use override this default orchestration.
 
 ## Context budget and handoff
