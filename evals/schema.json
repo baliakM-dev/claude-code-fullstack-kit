@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Unexecuted Claude Code evaluation suite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite",
+    "status",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "suite": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "status": {
+      "type": "string",
+      "const": "NOT_RUN_IN_CLAUDE_CODE"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "input",
+          "expected",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "input": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "expected": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "status": {
+            "type": "string",
+            "const": "NOT_RUN"
+          }
+        }
+      }
+    }
+  }
+}

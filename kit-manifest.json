@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "kit_version": "1.5.4",
-  "prepared_at": "2026-09-24",
+  "kit_version": "1.5.5",
+  "prepared_at": "2026-09-25",
   "agents": [
     "implementer",
     "code-reviewer",
@@ -51,6 +51,13 @@
     "tests/test_test_verification_efficiency.py",
     "tests/test_agent_orchestration.py",
     ".claude/agents/implementation-explainer.md",
-    "tests/test_implementation_explainer.py"
+    "tests/test_implementation_explainer.py",
+    "evals/cases.json",
+    "evals/community-patterns.json",
+    "evals/design-quality.json",
+    "evals/frontend-react.json",
+    "evals/platform-database.json",
+    "evals/schema.json",
+    "evals/security-rules.json"
   ]
 }

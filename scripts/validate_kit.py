@@ -113,6 +113,96 @@ def _validate_local_links(root: Path, errors: list[str]) -> int:
     return checked
 
 
+def _schema_errors(value: Any, schema: dict[str, Any], where: str) -> list[str]:
+    """Validate only the JSON Schema keywords used by evals/schema.json.
+
+    This is deliberately not a general JSON Schema implementation. Fail closed
+    if the shipped schema starts using unsupported keywords or types.
+    """
+    supported = {"$schema", "title", "type", "const", "properties", "required",
+                 "additionalProperties", "items", "minItems", "minLength", "pattern"}
+    if set(schema) - supported:
+        raise ValueError(f"unsupported schema keywords: {sorted(set(schema) - supported)}")
+    types = {"object": dict, "array": list, "string": str, "integer": int}
+    kind = schema.get("type")
+    if kind not in types:
+        raise ValueError(f"unsupported schema type: {kind}")
+    if type(value) is not types[kind]:
+        return [f"{where}: expected {kind}"]
+    errors = []
+    if "const" in schema and value != schema["const"]:
+        errors.append(f"{where}: must equal {schema['const']!r}")
+    if kind == "object":
+        for key in schema.get("required", []):
+            if key not in value:
+                errors.append(f"{where}: missing required field {key}")
+        properties = schema.get("properties", {})
+        if schema.get("additionalProperties") is False:
+            for key in sorted(set(value) - set(properties)):
+                errors.append(f"{where}: unexpected field {key}")
+        for key, child in properties.items():
+            if key in value:
+                errors.extend(_schema_errors(value[key], child, f"{where}.{key}"))
+    elif kind == "array":
+        if len(value) < schema.get("minItems", 0):
+            errors.append(f"{where}: too few items")
+        for index, item in enumerate(value):
+            errors.extend(_schema_errors(item, schema["items"], f"{where}[{index}]"))
+    elif kind == "string":
+        if len(value) < schema.get("minLength", 0):
+            errors.append(f"{where}: string too short")
+        if "pattern" in schema and not re.search(schema["pattern"], value):
+            errors.append(f"{where}: string does not match required pattern")
+    return errors
+
+
+def _validate_evals(root: Path, errors: list[str]) -> tuple[int, int]:
+    schema_path = root / "evals/schema.json"
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"evals/schema.json: {exc}")
+        return 0, 0
+    suites = cases = 0
+    seen: dict[str, str] = {}
+    for path in sorted((root / "evals").glob("*.json")):
+        if path == schema_path:
+            continue
+        where = str(path.relative_to(root))
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            problems = _schema_errors(data, schema, where)
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+            errors.append(f"{where}: invalid eval or schema: {exc}")
+            continue
+        errors.extend(problems)
+        if problems:
+            continue
+        suites += 1
+        for case in data["cases"]:
+            cases += 1
+            case_id = case["id"]
+            if case_id in seen:
+                errors.append(f"{where}: duplicate eval ID {case_id!r}; first in {seen[case_id]}")
+            else:
+                seen[case_id] = where
+    if not suites:
+        errors.append("evals: no valid suites found")
+    return suites, cases
+
+
+def _validate_skill_paths(root: Path, errors: list[str]) -> None:
+    paths = list((root / ".claude/agents").glob("*.md"))
+    paths.append(root / ".claude/policies/core.md")
+    for path in paths:
+        if not path.is_file():
+            continue
+        for relative in re.findall(r"`(\.claude/skills/[^`]+)`", path.read_text(encoding="utf-8")):
+            target = (root / relative).resolve()
+            if not target.is_relative_to((root / ".claude/skills").resolve()) or not target.is_file():
+                errors.append(f"{path.relative_to(root)}: invalid repository-root skill path: {relative}")
+
+
 def validate(root: Path = ROOT) -> dict[str, Any]:
     root = root.resolve()
     errors: list[str] = []
@@ -272,6 +362,8 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
         if "rrezartprebreza/spring-boot-skills" not in text:
             fail("THIRD_PARTY_NOTICES.md", "missing recorded upstream attribution")
 
+    counts["eval_suites"], counts["eval_cases"] = _validate_evals(root, errors)
+    _validate_skill_paths(root, errors)
     counts["local_links"] = _validate_local_links(root, errors)
 
     warnings.append(
