@@ -4,6 +4,8 @@ Reusable Claude Code agents, skills and engineering guardrails for secure, maint
 
 The kit is designed to support real software delivery rather than prompt-only code generation. It separates implementation, independent review, testing, security and platform concerns while keeping project-specific decisions outside the reusable core.
 
+Version **1.5.5** includes **7 agents and 9 skills** (8 core skills plus the optional financial domain skill).
+
 ## What is included
 
 ### Agents
@@ -134,7 +136,7 @@ Do not commit, push or deploy.
 
 ## Validation
 
-The repository ships structural regression tests and a static validator.
+The repository ships structural regression tests and a static validator, including eval schema, required-field and globally unique case-ID checks.
 
 Run:
 

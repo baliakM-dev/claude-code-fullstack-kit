@@ -1,4 +1,4 @@
-# Verification levels in kit 1.3.0
+# Verification levels in kit 1.5.5
 
 ## Shipped, executable Java example
 From the kit root, after inspecting the files, run:

@@ -33,6 +33,8 @@
 
 ## Agent orchestration
 - The main Claude Code conversation coordinates work and chooses agents automatically; the user does not need to name an agent in every prompt.
+- For bootstrap, nontrivial features, bug fixes or architecture decisions that need planning, the main conversation reads `.claude/skills/change-planning/SKILL.md` from the repository root before delegation. It owns the bounded plan, acceptance criteria, risk classification and verification steps; reuse an adequate existing plan. No separate planner agent is needed.
+- Agent skill paths beginning with `.claude/skills/` are repository-root paths for Read, not paths relative to the agent Markdown file.
 - Classify each task as LIGHT, STANDARD or HIGH-RISK before delegating.
 - LIGHT: work directly when trivial, or use implementer plus relevant checks. Do not spawn reviewers for cosmetic or obviously local changes.
 - STANDARD: use implementer for bounded production changes and code-reviewer for independent review when the change is material.

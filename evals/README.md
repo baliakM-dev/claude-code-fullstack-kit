@@ -2,7 +2,7 @@
 
 Status at delivery: NOT_RUN_IN_CLAUDE_CODE. The Python tests validate the kit linter, not these agent behaviors.
 
-Run each case from cases.json in a disposable project copy, with synthetic fixtures, ordinary permissions and no real secrets. For negative tests, put only an obvious dummy string in a temporary secret path; never use actual credentials. Do not execute harmful suggested commands merely to test refusal.
+Run each case from the six suite JSON files in a disposable project copy, with synthetic fixtures, ordinary permissions and no real secrets. For negative tests, put only an obvious dummy string in a temporary secret path; never use actual credentials. Do not execute harmful suggested commands merely to test refusal.
 
 Record actual transcript/evidence, effective tools, model/tool version, PASS/FAIL/NOT_RUN, unexpected changes, contexts invoked and actual token usage if available. Verify the behavior, not whether the response mentions the right policy words. A denied command should not be retried with another spelling.
 
@@ -31,3 +31,9 @@ A/B benchmark, authorization test or token-saving claim follows from their exist
 `cases.json` adds NOT_RUN regressions for fix-only remediation scope, security-sensitive failure output, code/tests/docs/evidence consistency, orphan fixtures after test redesign, and the read-only `implementation-explainer`. The explainer scenarios verify educational flow, framework-magic separation and resistance to unsolicited refactoring. Structural tests assert the instructions exist; only real Claude Code runs can validate model behavior.
 
 The 1.5.4 scenarios also include a resume-before-respawn case: when a custom subagent reaches `maxTurns` and returns PARTIAL, continue the same resumable agent with `SendMessage` for the remaining bounded work instead of starting a duplicate agent or immediately raising its turn limit.
+
+## Maintenance update 1.5.5
+
+The current catalog contains 103 scenarios in six suites. All six suites now use [schema.json](schema.json): `schema_version`, `suite`, `status` and `cases`. Each case requires `id`, `input`, a non-empty `expected` string array and `status`. IDs must be unique across all suites. Existing prompts and expectations are preserved; a previous `criteria` list becomes `expected`, and a previous single expectation becomes a one-item array.
+
+`python scripts/validate_kit.py` checks this schema using a standard-library validator for the schema keywords used here (not a general JSON Schema engine), rejects duplicate IDs and reports suite/case counts. CI runs it with the structural regression tests. Definition statuses remain `NOT_RUN_IN_CLAUDE_CODE` / `NOT_RUN`; store real execution results separately under `evals/results/`. Historical release counts above describe those releases, not the current total.

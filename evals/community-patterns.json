@@ -6,97 +6,129 @@
     {
       "id": "community-null-metadata-only",
       "input": "A developer adds JSpecify and says all NPEs are prevented.",
-      "expected": "Distinguish metadata from checker/runtime proof; request actual positive and negative null-check evidence.",
+      "expected": [
+        "Distinguish metadata from checker/runtime proof; request actual positive and negative null-check evidence."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-null-container-elements",
       "input": "A DTO allows a missing list but forbids null elements.",
-      "expected": "Use the correct nullable-container contract, runtime boundary checks and no mistaken nullable element annotation.",
+      "expected": [
+        "Use the correct nullable-container contract, runtime boundary checks and no mistaken nullable element annotation."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-jpa-assigned-id",
       "input": "An entity has a manually assigned UUID and no version; save issues unexpected selects/merge.",
-      "expected": "Check state detection and contract; choose correct persist/Persistable/version lifecycle, not rewrite IDs.",
+      "expected": [
+        "Check state detection and contract; choose correct persist/Persistable/version lifecycle, not rewrite IDs."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-jpa-mutable-equality",
       "input": "An entity hashes by mutable email and is kept in a HashSet across updates.",
-      "expected": "Identify hash/equality risk; preserve identity policy and test lifecycle/proxy behavior instead of copying email equality.",
+      "expected": [
+        "Identify hash/equality risk; preserve identity policy and test lifecycle/proxy behavior instead of copying email equality."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-jpa-collection-page",
       "input": "A pageable endpoint fetch-joins a collection and returns wrong totals.",
-      "expected": "Use a measured bounded projection or two-step fetch with owner/count scope, not global eager loading.",
+      "expected": [
+        "Use a measured bounded projection or two-step fetch with owner/count scope, not global eager loading."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-idempotency-concurrency",
       "input": "Two concurrent identical authenticated requests create two records.",
-      "expected": "Require database-scoped uniqueness and atomic claim/business/result protocol; test true overlapping transactions.",
+      "expected": [
+        "Require database-scoped uniqueness and atomic claim/business/result protocol; test true overlapping transactions."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-idempotency-owner",
       "input": "A key is reused by another user or with a changed payload.",
-      "expected": "Scope owner/operation/key; validate hash and authorize before execution/replay; no cross-user snapshot disclosure.",
+      "expected": [
+        "Scope owner/operation/key; validate hash and authorize before execution/replay; no cross-user snapshot disclosure."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-idempotency-expiry",
       "input": "Cleanup deletes a key while retries are in flight.",
-      "expected": "Define retention race and bounded recovery; expiration permits later execution and is not an exactly-once guarantee.",
+      "expected": [
+        "Define retention race and bounded recovery; expiration permits later execution and is not an exactly-once guarantee."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-transaction-aborted",
       "input": "A unique violation is caught and a select is attempted in the same aborted TX.",
-      "expected": "Use conflict-aware SQL/fresh transaction as appropriate; do not continue a failed physical transaction.",
+      "expected": [
+        "Use conflict-aware SQL/fresh transaction as appropriate; do not continue a failed physical transaction."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-stale-user-edit",
       "input": "An API stale If-Match conflict is automatically retried against the newest entity.",
-      "expected": "Preserve stale-client conflict semantics; a transient retry is not permission to overwrite a competing edit.",
+      "expected": [
+        "Preserve stale-client conflict semantics; a transient retry is not permission to overwrite a competing edit."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-audit-success-rollback",
       "input": "REQUIRES_NEW audit records CREATED even though the business operation rolls back.",
-      "expected": "Commit success audit with the mutation; distinguish attempt/failure logs and uncommitted-parent dependency.",
+      "expected": [
+        "Commit success audit with the mutation; distinguish attempt/failure logs and uncommitted-parent dependency."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-durable-notification",
       "input": "AFTER_COMMIT Async emails disappear on crash.",
-      "expected": "Use durable intent for required delivery and idempotent recovery; do not claim Async is durable.",
+      "expected": [
+        "Use durable intent for required delivery and idempotent recovery; do not claim Async is durable."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-csrf-positive-control",
       "input": "A mocked OIDC POST is forbidden and the agent proposes disabling CSRF.",
-      "expected": "Supply valid CSRF for positive tests and separate missing/invalid cases; keep real OIDC tests distinct.",
+      "expected": [
+        "Supply valid CSRF for positive tests and separate missing/invalid cases; keep real OIDC tests distinct."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-versioned-examples",
       "input": "An upstream Boot example has a different JDK, starters or provider version.",
-      "expected": "Verify against the selected BOM and compile real code; do not auto-migrate the application to the example.",
+      "expected": [
+        "Verify against the selected BOM and compile real code; do not auto-migrate the application to the example."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-source-linkage",
       "input": "The shipped helper changes but a separate copied test helper still passes.",
-      "expected": "Compile the shipped file, not a forked fixture; separate helper checks from PostgreSQL/Spring integration.",
+      "expected": [
+        "Compile the shipped file, not a forked fixture; separate helper checks from PostgreSQL/Spring integration."
+      ],
       "status": "NOT_RUN"
     },
     {
       "id": "community-selective-loading",
       "input": "A UI label change triggers all new JPA/null/idempotency references and a pipeline.",
-      "expected": "Stay in scope; no irrelevant reference preload, new agents or automatic orchestration.",
+      "expected": [
+        "Stay in scope; no irrelevant reference preload, new agents or automatic orchestration."
+      ],
       "status": "NOT_RUN"
     }
   ]

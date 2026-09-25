@@ -8,17 +8,20 @@ maxTurns: 35
 ---
 
 # Implement a bounded change
+Skill paths below are relative to the repository root, not this agent file.
 Read the shared policy, project profile, exact task and available commands. Receive criteria, allowed paths and risks from the main conversation; do not create a second task plan if a sufficient one exists.
 
-Load only relevant technical skills through Read. Use test-verification for changed behavior; do not preload unrelated skills. Detect missing dependencies or secrets without exposing values.
+Load only relevant technical skills through Read. Read `.claude/skills/test-verification/SKILL.md` for changed behavior; do not preload unrelated skills. Detect missing dependencies or secrets without exposing values.
 
-For a Spring/JVM code or design change, read [spring-backend](../skills/spring-backend/SKILL.md) and its required design-quality reference before implementation and self-review. Use that single standard and its proportionate evidence contract; do not duplicate it in this agent or load it for unrelated frontend-only work.
+For a Spring/JVM code or design change, read `.claude/skills/spring-backend/SKILL.md` and its required design-quality reference before implementation and self-review. Use that single standard and its proportionate evidence contract; do not duplicate it in this agent or load it for unrelated frontend-only work.
 
-For a new/changed Spring endpoint or a change to identity, authorization, sessions, tokens, browser credential flow, data exposure or proxy trust, read [application-security](../skills/application-security/SKILL.md) and its applicable references before writing.
+For a new/changed Spring endpoint or a change to identity, authorization, sessions, tokens, browser credential flow, data exposure or proxy trust, read `.claude/skills/application-security/SKILL.md` and its applicable references before writing.
 
-For React/TypeScript code, API client, form, routing or browser-state changes, read [react-typescript](../skills/react-typescript/SKILL.md) and only the relevant frontend references. For BFF/session/CSRF/login/logout changes also load application-security; React must not become an OAuth token client.
+For React/TypeScript code, API client, form, routing or browser-state changes, read `.claude/skills/react-typescript/SKILL.md` and only the relevant frontend references. For BFF/session/CSRF/login/logout changes also load application-security; React must not become an OAuth token client.
 
-For schema/Flyway/data-model changes, read [postgresql-migrations](../skills/postgresql-migrations/SKILL.md). For Docker/Compose, observability, backup/restore or runtime-delivery changes, read [delivery-operations](../skills/delivery-operations/SKILL.md). Load their detailed references only when that concern is actually touched. Design relevant negative tests and use the same standard in self-review. Return security REVIEW_REQUIRED for the affected risk; do not waive checks because the code compiles.
+For schema/Flyway/data-model changes, read `.claude/skills/postgresql-migrations/SKILL.md`. For Docker/Compose, observability, backup/restore or runtime-delivery changes, read `.claude/skills/delivery-operations/SKILL.md`. Load their detailed references only when that concern is actually touched. Design relevant negative tests and use the same standard in self-review. Return security REVIEW_REQUIRED for the affected risk; do not waive checks because the code compiles.
+
+For financial calculations, taxes, insurance contributions, reserves, cash-flow projections, rounding, effective dates or historical corrections, read `.claude/skills/financial-calculations/SKILL.md` before implementation. Use approved rules and independent expected values; block only the affected calculation when rule authority or rounding is unverified.
 
 Before writing inspect staged, unstaged and untracked changes. On an empty repository record the initial manifest and add no Git history. Implement the smallest complete solution and appropriate tests. Respect modular ownership and contracts. Do not introduce a language migration, new service or global refactor incidentally.
 
